@@ -1,5 +1,13 @@
 package view;
 
+import java.awt.HeadlessException;
+import java.io.FileFilter;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 public class MainForm extends javax.swing.JFrame {
 
     public MainForm() {
@@ -125,6 +133,11 @@ public class MainForm extends javax.swing.JFrame {
         jRadioButton2.setText("lapok összértéke");
 
         jButton3.setText("Mentés");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Kilépés");
 
@@ -164,6 +177,11 @@ public class MainForm extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         jMenu3.setText("Mentés");
+        jMenu3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenu3);
 
         jMenu4.setText("Kilépés");
@@ -220,6 +238,31 @@ public class MainForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+        mentes("view/res/ikon.jpg");
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        mentes("view/res/ikon.jpg");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void mentes(String eleresiUt) throws HeadlessException {
+        final JFileChooser fileChooser = new JFileChooser();
+        int resoult = fileChooser.showOpenDialog(this);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.jpg, *.gif", "jpg"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.txt", "txt"));
+        fileChooser.showSaveDialog(this);
+        
+        Icon icon = new ImageIcon(this.getClass().getResource(eleresiUt));
+        int valasz = JOptionPane.showConfirmDialog(
+                rootPane, 
+                "Fálj neve: "+fileChooser.getName(),
+                "Kérdés", 
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, 
+                icon);
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
