@@ -51,6 +51,11 @@ public class MainForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BlackJack");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Ellenfél"));
 
@@ -185,6 +190,11 @@ public class MainForm extends javax.swing.JFrame {
         jMenu1.add(jMenu3);
 
         jMenu4.setText("Kilépés");
+        jMenu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenu4);
 
         jMenuBar1.add(jMenu1);
@@ -240,27 +250,50 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+        // mentés menű gomb
         mentes("view/res/ikon.jpg");
     }//GEN-LAST:event_jMenu3ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // mentés gomb
         mentes("view/res/ikon.jpg");
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void mentes(String eleresiUt) throws HeadlessException {
+    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
+        // kilépés menű gomb
+        if (jRadioButtonMenuItem1.isSelected() && jRadioButton2.isSelected()) {
+            System.exit(0);
+        } else {
+            felugroAblak("view/res/ikon.jpg");
+        }
+    }//GEN-LAST:event_jMenu4ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // kilépés ablak gomb
+        if (jRadioButtonMenuItem1.isSelected() && jRadioButton2.isSelected()) {
+            System.exit(0);
+        } else {
+            felugroAblak("view/res/ikon.jpg");
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    public void mentes(String eleresiUt) throws HeadlessException {
         final JFileChooser fileChooser = new JFileChooser();
         int resoult = fileChooser.showOpenDialog(this);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.jpg, *.gif", "jpg"));
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*.txt", "txt"));
         fileChooser.showSaveDialog(this);
-        
+        felugroAblak(eleresiUt);
+    }
+
+    private void felugroAblak(String eleresiUt) {
         Icon icon = new ImageIcon(this.getClass().getResource(eleresiUt));
         int valasz = JOptionPane.showConfirmDialog(
-                rootPane, 
-                "Fálj neve: "+fileChooser.getName(),
-                "Kérdés", 
+                rootPane,
+                "Fálj neve: " + this.getName(),
+                "Kérdés",
                 JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE, 
+                JOptionPane.QUESTION_MESSAGE,
                 icon);
     }
 
